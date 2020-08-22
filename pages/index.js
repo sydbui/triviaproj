@@ -1,75 +1,117 @@
 import Link from 'next/link';
 import Head from '../components/head';
 import Nav from '../components/nav';
+import React, { Component } from 'react';
+// import HomePage from './trivia';
+import fetch from 'isomorphic-unfetch';
+import useSWR from '@zeit/swr';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/core";
+import {ThemeProvider, Heading, Flex, ButtonGroup, Box, Button} from "@chakra-ui/core";
 
-export default () => (
-  <div>
-    <Head title="Home" />
-    <Nav />
-    <div className="hero">
-      <h1 className="title">Welcome to Create Next App (Create Next.js App building tools)</h1>
-      <p className="description">To get started, edit <code>pages/index.js</code> and save to reload.</p>
-      <div className="row">
-        <Link href="//nextjs.org/docs/">
-          <a className="card">
-            <h3>Getting Started &rarr;</h3>
-            <p>Learn more about Next.js on official website</p>
-          </a>
-        </Link>
-        <Link href="//github.com/create-next-app/create-next-app">
-          <a className="card">
-            <h3>Create Next App&rarr;</h3>
-            <p>Was this tools helpful?</p>
-          </a>
-        </Link>
+const API_URL = 'https://opentdb.com/api.php?'
+async function fetcher(path) {
+  const res = await fetch(API_URL + path)
+  const json = await res.json()
+  return json
+}
+
+function HomePage(props) {
+  const string = 'amount=1' + props.category + '&type=multiple'
+  const { data, error } = useSWR(string, fetcher)
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return(
+    <Tabs isFitted>
+      <TabList>
+        <Tab>Question</Tab>
+        <Tab>Answer</Tab>
+      </TabList>
+    
+      <TabPanels>
+        <TabPanel>
+          <Heading>{ReactHtmlParser(data.results[0].question)}</Heading>
+        </TabPanel>
+        <TabPanel>
+          <Heading>{ReactHtmlParser(data.results[0].correct_answer)}</Heading>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  )
+}
+
+export default class reactApp extends Component{
+  constructor() {
+    super()
+    this.state = {
+      contents: "open",
+    //   contents: 
+    //   <Flex flexWrap="wrap" justifyContent="center">         
+    //     <Heading size="xl">Pick a Category</Heading>
+    //     <Box width="100%" height="50px"></Box>
+    // <ButtonGroup spacing={10} onClick={() => this.setState({contents:
+    // <Flex flexWrap="wrap">
+    //   <HomePage category={this.state.category}></HomePage>
+    //   <Box width="100%" height="80px"></Box> 
+    //   <Button onClick={() => this.setState({contents: <HomePage category={this.state.category}></HomePage>})}>NEXT</Button>
+    // </Flex>})}>
+    //       <Button onClick={() => this.setState({category:"&category=9"})}> General Knowledge </Button>
+    //       <Button onClick={() => this.setState({category:"&category=14"})}>Entertainment</Button>
+    //       <Button onClick={() => this.setState({category:"&category=17"})}>Science & Nature</Button>
+    //       <Button onClick={() => this.setState({category:"&category=27"})}>Animals</Button>
+    //       <Button onClick={() => this.setState({category:""})}>Mix It Up!</Button>
+    //     </ButtonGroup>
+    //   </Flex> ,
+      category: "",
+      question:"",
+      answer:"",
+    }
+  }
+  componentDidMount() {
+    this.setState({
+      question: <HomePage category={this.state.category}></HomePage>,
+    })
+  }
+
+  render() {
+    if (this.state.contents == "open") return (
+      <div className="container">
+        <Head>
+          <title>trivia fun</title>
+        </Head>
+  
+        <ThemeProvider>
+          <Flex justifyContent="center" flexWrap="wrap">
+            <Heading size="2xl">IT'S TRIVIA TIME</Heading>
+            <Box width="100%" height="20px"></Box>       
+            <Heading size="xl">Pick a Category</Heading>
+            <Box width="100%" height="50px"></Box>
+            <ButtonGroup spacing={10} onClick={()=> this.setState({contents:"cards"})}>
+              <Button onClick={() => this.setState({category:"&category=9"})}> General Knowledge </Button>
+              <Button onClick={() => this.setState({category:"&category=14"})}>Entertainment</Button>
+              <Button onClick={() => this.setState({category:"&category=17"})}>Science & Nature</Button>
+              <Button onClick={() => this.setState({category:"&category=27"})}>Animals</Button>
+              <Button onClick={() => this.setState({category:""})}>Mix It Up!</Button>
+            </ButtonGroup>
+            </Flex> 
+        </ThemeProvider>
       </div>
-    </div>
+    )
+    if (this.state.contents == "cards") return (
+      <ThemeProvider>
+        <Flex justifyContent="center" flexWrap="wrap">
+          <Heading size="2xl">IT'S TRIVIA TIME</Heading>
+          <Box width="100%" height="20px"></Box>
+          <Box width = "95%">
+          {this.state.question}
+          </Box>
+          <Box width="100%" height="15%"></Box>
+          <Button onClick={() => this.setState({
+            question: <HomePage category={this.state.category}></HomePage>
+          })}>Next</Button>
+        </Flex>
+      </ThemeProvider>
+    );
+  }
+}
 
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        padding-bottom: 12px;
-        line-height: 1.15;
-        font-size: 37px;
-      }
-      .title, .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 587px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9B9B9B;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
-  </div>
-);
