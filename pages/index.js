@@ -55,15 +55,15 @@ export default class reactApp extends Component{
             <Heading fontFamily="Zilla Slab"  size="xl">Pick a Category!</Heading>
             <Box width="100%" height="35px"></Box>
             <Flex flexWrap="wrap" width="60%"flexDirection="column">
-              <Button leftIcon={RiFlashlightLine} rightIcon={RiFlashlightLine} color="white" fontFamily="Zilla Slab" fontSize="28px" padding="4%" backgroundColor="#D1A857" variant="solid" onClick={() => this.setState({category:"&category=9", contents:"cards"})}> General Knowledge </Button>
+              <Button leftIcon={RiFlashlightLine} rightIcon={RiFlashlightLine} color="white" fontFamily="Zilla Slab" fontSize={["14px", "24px", "28px","28px"]} padding="4%" backgroundColor="#D1A857" variant="solid" onClick={() => this.setState({category:"&category=9", contents:"cards"})}> General Knowledge </Button>
               <Box width="100%" height="30px"></Box>
-              <Button leftIcon={BiCameraMovie} rightIcon={BiCameraMovie} color="white" fontFamily="Zilla Slab" fontSize="28px" padding="4%" backgroundColor="#9075C8" variant="solid" onClick={() => this.setState({category:"&category=14", contents:"cards"})}>Entertainment</Button>
+              <Button leftIcon={BiCameraMovie} rightIcon={BiCameraMovie} color="white" fontFamily="Zilla Slab" fontSize={["14px", "24px", "28px","28px"]} padding="4%" backgroundColor="#9075C8" variant="solid" onClick={() => this.setState({category:"&category=14", contents:"cards"})}>Entertainment</Button>
               <Box width="100%" height="30px"></Box>
-              <Button leftIcon={RiPlantLine} rightIcon={RiPlantLine} color="white" fontFamily="Zilla Slab" fontSize="28px" padding="4%" backgroundColor="#75C88C" variant="solid" onClick={() => this.setState({category:"&category=17", contents:"cards"})}>Science & Nature</Button>
+              <Button leftIcon={RiPlantLine} rightIcon={RiPlantLine} color="white" fontFamily="Zilla Slab" fontSize={["14px", "24px", "28px","28px"]} padding="4%" backgroundColor="#75C88C" variant="solid" onClick={() => this.setState({category:"&category=17", contents:"cards"})}>Science & Nature</Button>
               <Box width="100%" height="30px"></Box>
-              <Button leftIcon={RiBaiduLine} rightIcon={RiBaiduLine} color="white" fontFamily="Zilla Slab" fontSize="28px" padding="4%" backgroundColor="#C87575" variant="solid" onClick={() => this.setState({category:"&category=27", contents:"cards"})}>Animals</Button>
+              <Button leftIcon={RiBaiduLine} rightIcon={RiBaiduLine} color="white" fontFamily="Zilla Slab" fontSize={["14px", "24px", "28px","28px"]} padding="4%" backgroundColor="#C87575" variant="solid" onClick={() => this.setState({category:"&category=27", contents:"cards"})}>Animals</Button>
               <Box width="100%" height="30px"></Box>
-              <Button leftIcon={RiEmotionLine} rightIcon={RiEmotionLine} color="white" fontFamily="Zilla Slab" fontSize="28px" padding="4%" backgroundColor="#75AAC8" variant="solid" onClick={() => this.setState({category:"", contents:"cards"})}>Mix It Up!</Button>
+              <Button leftIcon={RiEmotionLine} rightIcon={RiEmotionLine} color="white" fontFamily="Zilla Slab" fontSize={["14px", "24px", "28px","28px"]} padding="4%" backgroundColor="#75AAC8" variant="solid" onClick={() => this.setState({category:"", contents:"cards"})}>Mix It Up!</Button>
               </Flex>
             <Box width="100%" height="55px"></Box>
             <Text>Trivia questions taken from Open Trivia Database.</Text>
