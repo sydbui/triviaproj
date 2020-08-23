@@ -107,9 +107,11 @@ export default class reactApp extends Component{
               </Box>
               <Box width = "100%" height="25px"></Box>
               <Flex width= "100%" justifyContent="space-between">
+                <Button color="#E0783F" fontFamily="Zilla Slab" fontSize="2xl" padding="2%" backgroundColor="#FFE1B5" variant="solid" onClick={()=> this.setState({index: this.state.index - 1})}>Back</Button>
                 <Button color="#E0783F" fontFamily="Zilla Slab" fontSize="2xl" padding="2%" backgroundColor="#FFE1B5" variant="solid" onClick={()=> this.setState({contents: "open"})}>Pick a New Category!</Button>
                 <Button color="#E0783F" fontFamily="Zilla Slab" fontSize="2xl" padding="2%" backgroundColor="#FFE1B5" variant="solid" onClick={()=> this.setState({index: this.state.index + 1})}>Next</Button>
               </Flex>
+              
             </Flex>
         </ThemeProvider>
       </div>
